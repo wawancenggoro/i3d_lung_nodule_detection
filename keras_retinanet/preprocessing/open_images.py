@@ -127,7 +127,7 @@ def generate_images_annotations_json(main_dir, metadata_dir, subset, cls_index, 
         annotations_path = os.path.join(metadata_dir, subset, 'annotations-human-bbox.csv')
 
     fieldnames = ['ImageID', 'Source', 'LabelName', 'Confidence',
-                  'XMin', 'XMax', 'YMin', 'YMax',
+                  'XMin', 'XMax', 'YMin', 'YMax','ZMin', 'ZMax'
                   'IsOccluded', 'IsTruncated', 'IsGroupOf', 'IsDepiction', 'IsInside']
 
     id_annotations = dict()
@@ -179,11 +179,15 @@ def generate_images_annotations_json(main_dir, metadata_dir, subset, cls_index, 
             x2 = float(row['XMax'])
             y1 = float(row['YMin'])
             y2 = float(row['YMax'])
+            z1 = float(row['ZMin'])
+            z2 = float(row['ZMax'])
 
             x1_int = int(round(x1 * width))
             x2_int = int(round(x2 * width))
             y1_int = int(round(y1 * height))
             y2_int = int(round(y2 * height))
+            z1_int = int(round(z1))
+            z2_int = int(round(z2))
 
             # Check that the bounding box is valid.
             if x2 <= x1:
@@ -200,7 +204,7 @@ def generate_images_annotations_json(main_dir, metadata_dir, subset, cls_index, 
                 continue
 
             img_id = row['ImageID']
-            annotation = {'cls_id': cls_id, 'x1': x1, 'x2': x2, 'y1': y1, 'y2': y2}
+            annotation = {'cls_id': cls_id, 'x1': x1, 'x2': x2, 'y1': y1, 'y2': y2, 'z1': z1, 'z2': z2}
 
             if img_id in id_annotations:
                 annotations = id_annotations[img_id]
