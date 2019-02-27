@@ -365,11 +365,15 @@ class OpenImagesGenerator(Generator):
             x2 = ann['x2'] * width
             y1 = ann['y1'] * height
             y2 = ann['y2'] * height
+            z1 = ann['z1']
+            z2 = ann['z2']
 
             annotations['bboxes'][idx, 0] = x1
             annotations['bboxes'][idx, 1] = y1
             annotations['bboxes'][idx, 2] = x2
             annotations['bboxes'][idx, 3] = y2
+            annotations['bboxes'][idx, 4] = z1
+            annotations['bboxes'][idx, 5] = z2
             annotations['labels'][idx] = cls_id
 
         return annotations
