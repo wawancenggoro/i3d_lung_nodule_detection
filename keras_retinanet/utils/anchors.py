@@ -267,8 +267,8 @@ def shift(shape, stride, anchors):
     A = anchors.shape[0]
     K = shifts.shape[0]
     all_anchors = (anchors.reshape((1, A, 4)) + shifts.reshape((1, K, 4)).transpose((1, 0, 2)))
-    all_anchors = all_anchors.reshape((K * A, 4))
-
+    all_anchors = all_anchors.reshape((K * A, 4)
+)
     return all_anchors
 
 
@@ -285,24 +285,36 @@ def generate_anchors(base_size=16, ratios=None, scales=None):
         scales = AnchorParameters.default.scales
 
     num_anchors = len(ratios) * len(scales)
+    print('\n debug num_anchors')
+    import IPython; IPython.embed()
 
     # initialize output anchors
-    anchors = np.zeros((num_anchors, 4))
+    anchors = np.zeros((num_anchors, 6))
+    print('\n initialize output anchors')
+    import IPython; IPython.embed()
+
 
     # scale base_size
-    anchors[:, 2:] = base_size * np.tile(scales, (2, len(ratios))).T
+    anchors[:, 2:] = base_size * np.tile(scales, (4, len(ratios))).T
+    print('\n scale base size')
+    import IPython; IPython.embed()
 
     # compute areas of anchors
     areas = anchors[:, 2] * anchors[:, 3]
+    print('\n compute area of anchors')
+    import IPython; IPython.embed()    
 
     # correct for ratios
     anchors[:, 2] = np.sqrt(areas / np.repeat(ratios, len(scales)))
     anchors[:, 3] = anchors[:, 2] * np.repeat(ratios, len(scales))
+    print('\n correct to ratio')
+    import IPython; IPython.embed()    
 
     # transform from (x_ctr, y_ctr, w, h) -> (x1, y1, x2, y2)
     anchors[:, 0::2] -= np.tile(anchors[:, 2] * 0.5, (2, 1)).T
     anchors[:, 1::2] -= np.tile(anchors[:, 3] * 0.5, (2, 1)).T
-
+    print('\n anchor transform')
+    import IPython; IPython.embed()    
     return anchors
 
 
