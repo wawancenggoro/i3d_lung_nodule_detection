@@ -285,13 +285,13 @@ def generate_anchors(base_size=16, ratios=None, scales=None):
         scales = AnchorParameters.default.scales
 
     num_anchors = len(ratios) * len(scales)
-    print('\n debug num_anchors')
-    import IPython; IPython.embed()
+    # print('\n debug num_anchors')
+    # import IPython; IPython.embed()
 
     # initialize output anchors
     anchors = np.zeros((num_anchors, 4))        #fungsi: buat numpy  array, kosong dengan dimensi number of anchors * 4 (original), saya ganti jadi 6 (untuk mengakomodir z1 & z2)
-    print('\n initialize output anchors')
-    import IPython; IPython.embed()
+    # print('\n initialize output anchors')
+    # import IPython; IPython.embed()
 
 
     # scale base_size
@@ -299,28 +299,28 @@ def generate_anchors(base_size=16, ratios=None, scales=None):
     #fungsi: np. tile untuk mengisi numpy array anchors yang masih kosong dari urutan 2 (baris 3) sd seterusnya, dan
         # awalnya hanya 2, len(ratios) --> saya ganti jadi 4, supaya baris ke 5-6(urutan 3-4) terisi sesuatu juga
         # base size asalnya dari baris 233, dan bagian dari pyramid level 3-7
-    print('\n scale base size')
-    import IPython; IPython.embed()
+    # print('\n scale base size')
+    # import IPython; IPython.embed()
 
     # compute areas of anchors
     areas = anchors[:, 2] * anchors[:, 3]
     #fungsi: menghitung area dari anchor pakai angka dari anchor baris 3 * 4
-    print('\n compute area of anchors')
-    import IPython; IPython.embed()    
+    # print('\n compute area of anchors')
+    # import IPython; IPython.embed()    
 
     # correct for ratios
     anchors[:, 2] = np.sqrt(areas / np.repeat(ratios, len(scales)))
     anchors[:, 3] = anchors[:, 2] * np.repeat(ratios, len(scales))
     #fungsi: mengoreksi anchor sesuai area dan scales 0,5 ... 1 ... 2 
-    print('\n correct to ratio')
-    import IPython; IPython.embed()    
+    # print('\n correct to ratio')
+    # import IPython; IPython.embed()    
 
     # transform from (x_ctr, y_ctr, w, h) -> (x1, y1, x2, y2)
     anchors[:, 0::2] -= np.tile(anchors[:, 2] * 0.5, (2, 1)).T
     anchors[:, 1::2] -= np.tile(anchors[:, 3] * 0.5, (2, 1)).T
     #fungsi: dari jarak yang udah didapatkan, dikali 0,5 karena titik yang didapatkan dari correct for ratio itu masih akan displit 1/2 ke kiri, 1/2 ke kanan (untuk x1 & x2), 1/2 ke atas, dan 1/2 ke bawah (untuk y1 & y2)
-    print('\n anchor transform')
-    import IPython; IPython.embed()    
+    # print('\n anchor transform')
+    # import IPython; IPython.embed()    
     return anchors
 
 
