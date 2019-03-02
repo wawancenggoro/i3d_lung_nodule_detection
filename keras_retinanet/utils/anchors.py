@@ -289,13 +289,13 @@ def generate_anchors(base_size=16, ratios=None, scales=None):
     import IPython; IPython.embed()
 
     # initialize output anchors
-    anchors = np.zeros((num_anchors, 6))        #fungsi: buat numpy  array, kosong dengan dimensi number of anchors * 4 (original), saya ganti jadi 6 (untuk mengakomodir z1 & z2)
+    anchors = np.zeros((num_anchors, 4))        #fungsi: buat numpy  array, kosong dengan dimensi number of anchors * 4 (original), saya ganti jadi 6 (untuk mengakomodir z1 & z2)
     print('\n initialize output anchors')
     import IPython; IPython.embed()
 
 
     # scale base_size
-    anchors[:, 2:] = base_size * np.tile(scales, (4, len(ratios))).T 
+    anchors[:, 2:] = base_size * np.tile(scales, (2, len(ratios))).T 
     #fungsi: np. tile untuk mengisi numpy array anchors yang masih kosong dari urutan 2 (baris 3) sd seterusnya, dan
         # awalnya hanya 2, len(ratios) --> saya ganti jadi 4, supaya baris ke 5-6(urutan 3-4) terisi sesuatu juga
         # base size asalnya dari baris 233, dan bagian dari pyramid level 3-7
