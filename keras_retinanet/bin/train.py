@@ -703,7 +703,8 @@ def main(args=None):
         callbacks=callbacks,
         workers=args.workers,
         use_multiprocessing=use_multiprocessing,
-        max_queue_size=args.max_queue_size
+        max_queue_size=args.max_queue_size,
+        initial_epoch=5
     )
 
 if __name__ == '__main__':
